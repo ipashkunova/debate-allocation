@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ACS Debate Club – Allocation System</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <h1 class="header-title">ACS Debate Club – Weekly Allocation</h1>
+            <nav class="header-nav">
+                <a href="#" id="nav-home" class="nav-link active">Register</a>
+                <a href="#" id="nav-admin" class="nav-link">Admin</a>
+            </nav>
+        </div>
+    </header>
+
+    <main id="app">
+        <!-- PAGE 1: Registration -->
+        <section id="page-registration" class="page active">
+            <div class="container">
+                <h2>Registration</h2>
+                <div class="tabs">
+                    <button class="tab-button active" data-tab="team">Team Registration</button>
+                    <button class="tab-button" data-tab="solo">Solo Registration</button>
+                    <button class="tab-button" data-tab="judge">Judge Registration</button>
+                </div>
+
+                <!-- Tab 1: Team Registration -->
+                <div id="tab-team" class="tab-content active">
+                    <form id="form-team" class="registration-form">
+                        <div class="form-group">
+                            <label for="team-debater1">Debater 1 Name</label>
+                            <input type="text" id="team-debater1" placeholder="Enter name" required>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="novice-check">
+                                Novice
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="team-debater2">Debater 2 Name</label>
+                            <input type="text" id="team-debater2" placeholder="Enter name" required>
+                            <label class="checkbox-label">
+                                <input type="checkbox" class="novice-check">
+                                Novice
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Register Team</button>
+                        <div id="team-error" class="error-message"></div>
+                        <div id="team-success" class="success-message"></div>
+                    </form>
+                </div>
+
+                <!-- Tab 2: Solo Registration -->
+                <div id="tab-solo" class="tab-content">
+                    <form id="form-solo" class="registration-form">
+                        <div class="form-group">
+                            <label for="solo-name">Your Name</label>
+                            <input type="text" id="solo-name" placeholder="Enter name" required>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="solo-novice" class="novice-check">
+                                Novice
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <div id="solo-error" class="error-message"></div>
+                        <div id="solo-success" class="success-message"></div>
+                    </form>
+                </div>
+
+                <!-- Tab 3: Judge Registration -->
+                <div id="tab-judge" class="tab-content">
+                    <form id="form-judge" class="registration-form">
+                        <div class="form-group">
+                            <label for="judge-name">Judge Name</label>
+                            <input type="text" id="judge-name" placeholder="Enter name" required>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="judge-novice" class="novice-check">
+                                Novice Judge
+                            </label>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">Register</button>
+                        <div id="judge-error" class="error-message"></div>
+                        <div id="judge-success" class="success-message"></div>
+                    </form>
+                </div>
+
+                <!-- Live Registrants List -->
+                <div class="registrants-list">
+                    <h3>Registered for Today</h3>
+                    <div id="registrants-container" class="registrants">
+                        <p class="placeholder">No registrations yet</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PAGE 2: Admin Dashboard -->
+        <section id="page-admin" class="page">
+            <!-- Admin Login -->
+            <div id="admin-login" class="admin-login">
+                <div class="login-box">
+                    <h2>Admin Access</h2>
+                    <form id="admin-login-form">
+                        <div class="form-group">
+                            <label for="admin-password">Password</label>
+                            <input type="password" id="admin-password" placeholder="Enter password" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Enter</button>
+                        <div id="login-error" class="error-message"></div>
+                    </form>
+                </div>
+            </div>
+
+            <!-- Admin Dashboard (hidden until login) -->
+            <div id="admin-dashboard" class="admin-dashboard hidden">
+                <div class="admin-header">
+                    <div class="admin-title">
+                        <h2>Admin Dashboard</h2>
+                        <p id="meeting-info"></p>
+                    </div>
+                    <div class="admin-actions">
+                        <button id="btn-new-meeting" class="btn btn-secondary">🔄 New Meeting</button>
+                        <button id="btn-logout" class="btn btn-secondary">🚪 Logout</button>
+                    </div>
+                </div>
+
+                <div class="admin-container">
+                    <!-- Registrants Section -->
+                    <section class="admin-section">
+                        <h3>Registrants</h3>
+                        <div id="admin-registrants" class="admin-registrants">
+                            <p class="placeholder">Loading...</p>
+                        </div>
+                    </section>
+
+                    <!-- Allocation Section -->
+                    <section class="admin-section">
+                        <h3>Allocation</h3>
+                        <div class="allocation-controls">
+                            <button id="btn-allocate" class="btn btn-primary">🎲 Allocate</button>
+                            <button id="btn-manual-edit" class="btn btn-secondary" disabled>📋 Manual Edit</button>
+                            <button id="btn-publish" class="btn btn-success" disabled>✅ Publish</button>
+                        </div>
+
+                        <div id="allocation-view" class="allocation-view">
+                            <p class="placeholder">No allocation yet. Click 'Allocate' to begin.</p>
+                        </div>
+                    </section>
+
+                    <!-- Past Meetings -->
+                    <section class="admin-section">
+                        <button id="btn-past-meetings" class="btn btn-secondary">📊 View Past Meetings</button>
+                    </section>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Modals -->
+    <div id="modal-overlay" class="modal-overlay hidden"></div>
+    <div id="modal-past-meetings" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Past Meetings</h3>
+                <button class="modal-close">&times;</button>
+            </div>
+            <div id="past-meetings-list" class="past-meetings-list">
+                <p class="placeholder">Loading...</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebaseapp/10.5.0/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebaseapp/10.5.0/firebase-database.js"></script>
+
+    <!-- App Scripts -->
+    <script src="js/config.js"></script>
+    <script src="js/firebase-init.js"></script>
+    <script src="js/utils.js"></script>
+    <script src="js/allocation-algo.js"></script>
+    <script src="js/register.js"></script>
+    <script src="js/admin.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
