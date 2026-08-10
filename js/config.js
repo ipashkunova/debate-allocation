@@ -1,12 +1,13 @@
 // Firebase Configuration
 const FIREBASE_CONFIG = {
-    apiKey: "YOUR_API_KEY",
-    authDomain: "YOUR_PROJECT.firebaseapp.com",
-    databaseURL: "https://YOUR_PROJECT.firebaseio.com",
-    projectId: "YOUR_PROJECT_ID",
-    storageBucket: "YOUR_PROJECT.appspot.com",
-    messagingSenderId: "YOUR_SENDER_ID",
-    appId: "YOUR_APP_ID"
+    apiKey: "AIzaSyAeVCHe4wtWml5mBVwOxoCmZZia80ExqnQ",
+    authDomain: "debate-allocation.firebaseapp.com",
+    databaseURL: "https://debate-allocation-default-rtdb.europe-west1.firebasedatabase.app",
+    projectId: "debate-allocation",
+    storageBucket: "debate-allocation.firebasestorage.app",
+    messagingSenderId: "905904392370",
+    appId: "1:905904392370:web:66faa7464e4c71143c61ab",
+    measurementId: "G-9MCT8BPEPG"
 };
 
 // Admin password (CHANGE THIS TO SOMETHING SECURE)
