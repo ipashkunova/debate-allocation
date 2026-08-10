@@ -177,13 +177,71 @@
         </div>
     </div>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebaseapp/9.23.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebaseapp/9.23.0/firebase-database-compat.js"></script>
+    <!-- Firebase SDK via jsDelivr CDN (ESM) -->
+    <script type="module">
+        import { initializeApp } from 'https://cdn.jsdelivr.net/npm/firebase@9.23.0/+esm';
+        import { getDatabase, ref, set, onValue, child, get } from 'https://cdn.jsdelivr.net/npm/firebase@9.23.0/database/+esm';
+
+        window.firebaseInit = async function() {
+            const config = {
+                apiKey: "AIzaSyAeVCHe4wtWml5mBVwOxoCmZZia80ExqnQ",
+                authDomain: "debate-allocation.firebaseapp.com",
+                databaseURL: "https://debate-allocation-default-rtdb.europe-west1.firebasedatabase.app",
+                projectId: "debate-allocation",
+                storageBucket: "debate-allocation.firebasestorage.app",
+                messagingSenderId: "905904392370",
+                appId: "1:905904392370:web:66faa7464e4c71143c61ab"
+            };
+            
+            const app = initializeApp(config);
+            const db = getDatabase(app);
+            
+            window.firebase = { initializeApp, getDatabase };
+            window.db = db;
+            window.ref = ref;
+            window.set = set;
+            window.onValue = onValue;
+            window.child = child;
+            window.get = get;
+            
+            // Initialize DB global
+            window.DB = {
+                meetings: () => ref(db, 'meetings'),
+                currentMeeting: () => {
+                    const today = new Date().toISOString().split('T')[0];
+                    return ref(db, `meetings/${today}`);
+                },
+                registrants: () => {
+                    const today = new Date().toISOString().split('T')[0];
+                    return ref(db, `meetings/${today}/registrants`);
+                },
+                allocation: () => {
+                    const today = new Date().toISOString().split('T')[0];
+                    return ref(db, `meetings/${today}/allocation`);
+                }
+            };
+            
+            // Check if today's meeting exists
+            const today = new Date().toISOString().split('T')[0];
+            const snapshot = await get(window.DB.currentMeeting());
+            
+            if (!snapshot.exists()) {
+                await set(window.DB.currentMeeting(), {
+                    date: today,
+                    status: 'draft',
+                    registrants: {},
+                    allocation: {}
+                });
+            }
+            
+            console.log('Firebase initialized successfully');
+        };
+        
+        window.firebaseInit();
+    </script>
 
     <!-- App Scripts -->
     <script src="js/config.js"></script>
-    <script src="js/firebase-init.js"></script>
     <script src="js/utils.js"></script>
     <script src="js/allocation-algo.js"></script>
     <script src="js/register.js"></script>
